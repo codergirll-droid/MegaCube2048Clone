@@ -153,9 +153,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxNumbers: 
-  boxMaterials: []
+  boxMaterials:
+  - {fileID: 2100000, guid: eba00f38effd42645a7a758435738bee, type: 2}
+  - {fileID: 2100000, guid: 9d10317e039c9c742a6ef738a262dd05, type: 2}
+  - {fileID: 2100000, guid: 9c35265079d5d8d4abd89b546445b37e, type: 2}
+  - {fileID: 2100000, guid: 40e6d0bc5b41a93468d0acfa4e76ac1c, type: 2}
+  - {fileID: 2100000, guid: 3049607e47bbfe641890e9e26e5086cc, type: 2}
+  - {fileID: 2100000, guid: d164184ca28a42d4c869ef0ce85efb28, type: 2}
+  - {fileID: 2100000, guid: 5290af5be35cc3a47a655fbefecfe125, type: 2}
+  - {fileID: 2100000, guid: 8cb896690036f5e4aa914d7c046e7b1a, type: 2}
+  - {fileID: 2100000, guid: 1317fb7264e1f3e4bb3ac53f2132179f, type: 2}
+  - {fileID: 2100000, guid: ff1f5c60a42ccdc43963e8989ef83152, type: 2}
+  - {fileID: 2100000, guid: ab20a68d4c412804598ab9421f2fb6b8, type: 2}
   box: {fileID: 1914874478}
+  boxPrefab: {fileID: 4085395114179089695, guid: b2577976e9246b64c92f4100b3ca0968,
+    type: 3}
   touchAmountRatio: 0.07
+  forceRatio: 1000
+  boxSpawnPoint: {fileID: 920454496}
 --- !u!4 &514617543
 Transform:
   m_ObjectHideFlags: 0
@@ -169,7 +184,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -263,8 +278,39 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 45, y: -17.83, z: 0}
+--- !u!1 &920454495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 920454496}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &920454496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920454495}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -9.398017, z: 5.46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +491,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1593166116
 PrefabInstance:
@@ -457,7 +503,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 769226418a57ccb4994169bc66255204,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 769226418a57ccb4994169bc66255204,
         type: 3}
@@ -522,35 +568,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3779457867619457197}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1914874483
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1914874478}
-  m_Material: {fileID: 13400000, guid: 86b099ad00987b94d8ff2a08ee27fa02, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.020000005, z: 0.020000005}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1914874484
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1914874478}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &2136705863 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 769226418a57ccb4994169bc66255204,
@@ -597,7 +614,7 @@ PrefabInstance:
     - target: {fileID: 3745285813390446501, guid: b2577976e9246b64c92f4100b3ca0968,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3745285813390446501, guid: b2577976e9246b64c92f4100b3ca0968,
         type: 3}

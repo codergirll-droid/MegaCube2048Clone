@@ -8,7 +8,26 @@ public class GameManager : MonoBehaviour
     public List<Material> boxMaterials;
 
     public GameObject box;
+    public GameObject boxPrefab;
+
     public float touchAmountRatio;
+    public int forceRatio = 1000;
+
+    public Transform boxSpawnPoint;
+
+    public static GameManager Instance;
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
     private void Start()
     {
@@ -53,7 +72,8 @@ public class GameManager : MonoBehaviour
 
             if (touch.phase == TouchPhase.Ended)
             {
-                box.GetComponent<Rigidbody>().AddForce(Vector3.forward * 1000);
+                box.GetComponent<Rigidbody>().AddForce(Vector3.forward * forceRatio);
+                Invoke(nameof(BoxSpawner), 0.2f);
             }
 
 
@@ -64,17 +84,26 @@ public class GameManager : MonoBehaviour
 
     void BoxSpawner()
     {
-
+        
+        box = Instantiate(boxPrefab, boxSpawnPoint.position, Quaternion.identity);
+        int randomNum = Random.Range(0, boxNumbers.Count);
+        box.GetComponent<Box>().boxIndx = randomNum;
+        box.GetComponent<Box>().boxNumber = boxNumbers[randomNum];
+        box.GetComponent<Renderer>().material = boxMaterials[randomNum];
     }
 
-    public void BoxUpdater()
+    public void BoxUpdater(GameObject boxObj)
     {
-
+        Box b = boxObj.GetComponent<Box>();
+        b.boxIndx += 1;
+        b.boxNumber = boxNumbers[b.boxIndx];
+        boxObj.GetComponent<Renderer>().material = boxMaterials[b.boxIndx];
+        
     }
 
-    public void BoxDestroyer()
+    public void BoxDestroyer(GameObject boxObj)
     {
-
+        Destroy(boxObj);
     }
 
 }
