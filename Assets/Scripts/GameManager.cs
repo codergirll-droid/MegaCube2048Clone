@@ -90,9 +90,24 @@ public class GameManager : MonoBehaviour
 
     void BoxSpawner()
     {
-        
+        int randomPerc = Random.Range(0, 101);
         box = Instantiate(boxPrefab, boxSpawnPoint.position, Quaternion.identity);
-        int randomNum = Random.Range(0, boxNumbers.Count);
+        int randomNum;
+
+        if (randomPerc > 80)
+        {
+            randomNum = Random.Range(8, 11);
+        }
+        else if(randomPerc > 60)
+        {
+            randomNum = Random.Range(4, 8);
+        }
+        else
+        {
+            randomNum = Random.Range(0, 4);
+        }
+
+        
         box.GetComponent<Box>().boxIndx = randomNum;
         box.GetComponent<Box>().boxNumber = boxNumbers[randomNum];
         box.GetComponent<Renderer>().material = boxMaterials[randomNum];

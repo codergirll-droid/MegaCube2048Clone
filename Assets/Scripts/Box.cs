@@ -14,6 +14,7 @@ public class Box : MonoBehaviour
             if(other.gameObject.GetComponent<Box>().boxNumber == this.boxNumber)
             {
                 GameManager.Instance.BoxDestroyer(other.gameObject);
+                GetComponent<Rigidbody>().AddExplosionForce(250, this.gameObject.transform.position, 3, 3.0F);
 
                 if (boxNumber != 2048)
                 {
