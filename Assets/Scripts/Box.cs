@@ -13,40 +13,23 @@ public class Box : MonoBehaviour
         {
             if(other.gameObject.GetComponent<Box>().boxNumber == this.boxNumber)
             {
-                if(boxNumber <= 1024)
+                GameManager.Instance.BoxDestroyer(other.gameObject);
+
+                if (boxNumber != 2048)
                 {
-                    GameManager.Instance.BoxUpdater(other.gameObject);
+                    GameManager.Instance.BoxUpdater(this.gameObject);
 
                 }
                 else
                 {
-                    GameManager.Instance.BoxDestroyer(other.gameObject);
+                    GameManager.Instance.BoxDestroyer(this.gameObject);
                 }
 
-                GameManager.Instance.BoxDestroyer(this.gameObject);
+                
             }
         }
     }
 
-    private void OnCollisionStay(Collision other)
-    {
-        if (other.gameObject.CompareTag("box"))
-        {
-            if (other.gameObject.GetComponent<Box>().boxNumber == this.boxNumber)
-            {
-                if (boxNumber <= 1024)
-                {
-                    GameManager.Instance.BoxUpdater(other.gameObject);
 
-                }
-                else
-                {
-                    GameManager.Instance.BoxDestroyer(other.gameObject);
-                }
-
-                GameManager.Instance.BoxDestroyer(this.gameObject);
-            }
-        }
-    }
 
 }

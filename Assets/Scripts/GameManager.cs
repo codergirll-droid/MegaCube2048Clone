@@ -31,8 +31,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        boxNumbers = new List<int> { 2, 4, 8, 16, 32, 64, 128, 512, 1024, 2048 };
-
+        boxNumbers = new List<int> { 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048 };
+        BoxSpawner();
+        box = GameObject.FindGameObjectWithTag("box");
     }
 
     private void Update()
@@ -67,7 +68,12 @@ public class GameManager : MonoBehaviour
                     touchAmount = 0;
                 }
 
-                box.transform.position += new Vector3(touchAmount, 0, 0);
+                float newXPos = box.transform.position.x + touchAmount;
+                if (newXPos < 2.5f && newXPos > -2.5f)
+                {
+                    box.transform.position += new Vector3(touchAmount, 0, 0);
+
+                }
             }
 
             if (touch.phase == TouchPhase.Ended)

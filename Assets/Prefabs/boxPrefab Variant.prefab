@@ -90,7 +90,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ebed23eb3a199d04e84d3b7f6201c1fe,
         type: 3}
       propertyPath: m_Name
-      value: boxPrefab
+      value: boxPrefab Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ebed23eb3a199d04e84d3b7f6201c1fe,
         type: 3}
@@ -146,4 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b37516a2ebbd0a44b97a64acadd44520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxNumber: 2
+  boxNumber: 0
+  boxIndx: 0
