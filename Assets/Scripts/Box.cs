@@ -15,6 +15,8 @@ public class Box : MonoBehaviour
             {
                 GameManager.Instance.BoxDestroyer(other.gameObject);
                 GetComponent<Rigidbody>().AddExplosionForce(250, this.gameObject.transform.position, 3, 3.0F);
+                GameManager.Instance.AddPoints();
+                GameManager.Instance.totalPointsTxt.text = "Score " + GameManager.Instance.totalPoints;
 
                 if (boxNumber != 2048)
                 {

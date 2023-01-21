@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class GameManager : MonoBehaviour
     public int forceRatio = 1000;
 
     public Transform boxSpawnPoint;
+
+    public int totalPoints = 0;
+    public int highScore = 0;
+
+    public TMP_Text totalPointsTxt;
+    public TMP_Text highScoreTxt;
 
     public static GameManager Instance;
 
@@ -34,6 +41,9 @@ public class GameManager : MonoBehaviour
         boxNumbers = new List<int> { 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048 };
         BoxSpawner();
         box = GameObject.FindGameObjectWithTag("box");
+
+        totalPointsTxt.text = "Score " + 0;
+        highScoreTxt.text = "High score: " + SaveSystem.Instance.GetPoints().ToString();
     }
 
     private void Update()
@@ -88,10 +98,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #region BOX STUFF
+    
     void BoxSpawner()
     {
         int randomPerc = Random.Range(0, 101);
-        box = Instantiate(boxPrefab, boxSpawnPoint.position, Quaternion.identity);
+        box = Instantiate(boxPrefab, boxSpawnPoint.position, boxSpawnPoint.rotation);
         int randomNum;
 
         if (randomPerc > 80)
@@ -125,6 +137,27 @@ public class GameManager : MonoBehaviour
     public void BoxDestroyer(GameObject boxObj)
     {
         Destroy(boxObj);
+    }
+    #endregion
+
+    #region POINTS AND SAVE
+
+    public void AddPoints()
+    {
+        totalPoints += 1;
+    }
+
+    #endregion
+
+
+    private void OnDisable()
+    {
+        SaveSystem.Instance.SaveGame();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveSystem.Instance.SaveGame();
     }
 
 }
