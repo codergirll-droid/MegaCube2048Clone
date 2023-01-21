@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public TMP_Text totalPointsTxt;
     public TMP_Text highScoreTxt;
 
+    bool canSpawn = true;
+
     public static GameManager Instance;
 
     private void Awake()
@@ -86,10 +88,12 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            if (touch.phase == TouchPhase.Ended)
+            if (touch.phase == TouchPhase.Ended && canSpawn)
             {
                 box.GetComponent<Rigidbody>().AddForce(Vector3.forward * forceRatio);
                 Invoke(nameof(BoxSpawner), 0.2f);
+                canSpawn = false;
+                Invoke(nameof(CoolDown), 0.3f);
             }
 
 
@@ -158,6 +162,11 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveSystem.Instance.SaveGame();
+    }
+
+    void CoolDown()
+    {
+        canSpawn = true;
     }
 
 }
