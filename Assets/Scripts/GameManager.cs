@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -26,6 +27,10 @@ public class GameManager : MonoBehaviour
     bool canSpawn = true;
 
     public GameObject particles;
+    public GameObject failPanel;
+
+    public int boxCount = 0;
+    bool canPlay = true;
 
     public static GameManager Instance;
 
@@ -54,55 +59,89 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         Controls();
+        CheckGameState();
+    }
+
+    void CheckGameState()
+    {
+        if(boxCount >= 20)
+        {
+            Fail();
+        }
+    }
+
+    private void Fail()
+    {
+        failPanel.SetActive(true);
+        canPlay = false;
+    }
+
+    public void RetryBtn()
+    {
+        SceneManager.LoadScene(0);
     }
 
     void Controls()
     {
-        if(Input.touchCount > 0)
+        if (canPlay)
         {
-            Touch touch = Input.GetTouch(0);
-            Vector2 touchPos = new Vector2();
-            float touchAmount = 0;
-            if(touch.phase == TouchPhase.Began)
+            if (Input.touchCount > 0)
             {
-                touchPos = touch.deltaPosition;
-            }
-
-            if(touch.phase == TouchPhase.Moved)
-            {
-                if((touchPos.x - touch.deltaPosition.x) > 0)
+                Touch touch = Input.GetTouch(0);
+                Vector2 touchPos = new Vector2();
+                float touchAmount = 0;
+                if (touch.phase == TouchPhase.Began)
                 {
-                    touchAmount = -touchAmountRatio;
-
-                }else if((touchPos.x - touch.deltaPosition.x) < 0)
-                {
-                    touchAmount = touchAmountRatio;
-                }
-                else
-                {
-                    touchAmount = 0;
+                    touchPos = touch.deltaPosition;
                 }
 
-                float newXPos = box.transform.position.x + touchAmount;
-                if (newXPos < 2.5f && newXPos > -2.5f)
+                if (touch.phase == TouchPhase.Moved)
                 {
-                    box.transform.position += new Vector3(touchAmount, 0, 0);
+                    if ((touchPos.x - touch.deltaPosition.x) > 0)
+                    {
+                        touchAmount = -touchAmountRatio;
+
+                    }
+                    else if ((touchPos.x - touch.deltaPosition.x) < 0)
+                    {
+                        touchAmount = touchAmountRatio;
+                    }
+                    else
+                    {
+                        touchAmount = 0;
+                    }
+
+                    float newXPos = box.transform.position.x + touchAmount;
+                    if (newXPos < 2.5f && newXPos > -2.5f)
+                    {
+                        box.transform.position += new Vector3(touchAmount, 0, 0);
+
+                    }
+                }
+
+                if (touch.phase == TouchPhase.Ended && canSpawn)
+                {
+                    if(box != null)
+                    {
+                        box.GetComponent<Rigidbody>().AddForce(Vector3.forward * forceRatio);
+                        Invoke(nameof(BoxSpawner), 0.2f);
+                        canSpawn = false;
+                        Invoke(nameof(CoolDown), 0.3f);
+                        boxCount++;
+                    }
+                    else
+                    {
+                        Fail();
+                    }
 
                 }
+
+
+
+
             }
-
-            if (touch.phase == TouchPhase.Ended && canSpawn)
-            {
-                box.GetComponent<Rigidbody>().AddForce(Vector3.forward * forceRatio);
-                Invoke(nameof(BoxSpawner), 0.2f);
-                canSpawn = false;
-                Invoke(nameof(CoolDown), 0.3f);
-            }
-
-
-
-
         }
+        
     }
 
     #region BOX STUFF
@@ -113,17 +152,21 @@ public class GameManager : MonoBehaviour
         box = Instantiate(boxPrefab, boxSpawnPoint.position, boxSpawnPoint.rotation);
         int randomNum;
 
-        if (randomPerc > 80)
+        if (randomPerc > 90)
         {
-            randomNum = Random.Range(8, 11);
+            randomNum = Random.Range(0, 3);
         }
-        else if(randomPerc > 60)
+        else if(randomPerc > 50)
         {
-            randomNum = Random.Range(4, 8);
+            randomNum = Random.Range(3, 6);
+        }
+        else if(randomPerc > 10)
+        {
+            randomNum = Random.Range(6, 9);
         }
         else
         {
-            randomNum = Random.Range(0, 4);
+            randomNum = Random.Range(9, 11);
         }
 
         

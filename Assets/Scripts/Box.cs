@@ -25,16 +25,19 @@ public class Box : MonoBehaviour
                     GameManager.Instance.BoxUpdater(this.gameObject);
                     GameManager.Instance.PopParticles(gameObject.GetComponent<Box>(), other.gameObject.transform.position);
 
-
+                    GameManager.Instance.boxCount--;
                 }
                 else
                 {
                     GameManager.Instance.PopParticles(gameObject.GetComponent<Box>(), other.gameObject.transform.position);
 
                     GameManager.Instance.BoxDestroyer(this.gameObject);
+                    GameManager.Instance.boxCount--;
+                    GameManager.Instance.boxCount--;
+
                 }
 
-                
+
             }
         }
     }
