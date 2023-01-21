@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public List<int> boxNumbers;
     public List<Material> boxMaterials;
+    public List<Color> particleColors;
 
     public GameObject box;
     public GameObject boxPrefab;
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     public TMP_Text highScoreTxt;
 
     bool canSpawn = true;
+
+    public GameObject particles;
 
     public static GameManager Instance;
 
@@ -127,6 +130,7 @@ public class GameManager : MonoBehaviour
         box.GetComponent<Box>().boxIndx = randomNum;
         box.GetComponent<Box>().boxNumber = boxNumbers[randomNum];
         box.GetComponent<Renderer>().material = boxMaterials[randomNum];
+        
     }
 
     public void BoxUpdater(GameObject boxObj)
@@ -167,6 +171,14 @@ public class GameManager : MonoBehaviour
     void CoolDown()
     {
         canSpawn = true;
+    }
+
+    public void PopParticles(Box b, Vector3 pos)
+    {
+        GameObject x = Instantiate(particles, pos, Quaternion.identity);
+        x.GetComponent<ParticleSystem>().startColor = particleColors[b.boxIndx];
+
+        Destroy(x, 1f);
     }
 
 }
