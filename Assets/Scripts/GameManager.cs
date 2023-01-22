@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public int boxCount = 0;
     bool canPlay = true;
 
+
+
     public static GameManager Instance;
 
     private void Awake()
@@ -64,13 +66,13 @@ public class GameManager : MonoBehaviour
 
     void CheckGameState()
     {
-        if(boxCount >= 20)
+        if(boxCount >= 30)
         {
             Fail();
         }
     }
 
-    private void Fail()
+    public void Fail()
     {
         failPanel.SetActive(true);
         canPlay = false;
@@ -111,18 +113,28 @@ public class GameManager : MonoBehaviour
                         touchAmount = 0;
                     }
 
-                    float newXPos = box.transform.position.x + touchAmount;
-                    if (newXPos < 2.5f && newXPos > -2.5f)
+                    if (box != null)
                     {
-                        box.transform.position += new Vector3(touchAmount, 0, 0);
+                        float newXPos = box.transform.position.x + touchAmount;
+                        if (newXPos < 2.5f && newXPos > -2.5f)
+                        {
+                            box.transform.position += new Vector3(touchAmount, 0, 0);
 
+                        }
                     }
+                    else
+                    {
+                        Fail();
+                    }
+
+
                 }
 
                 if (touch.phase == TouchPhase.Ended && canSpawn)
                 {
                     if(box != null)
                     {
+                        Destroy(box.GetComponent<boxInHand>());
                         box.GetComponent<Rigidbody>().AddForce(Vector3.forward * forceRatio);
                         Invoke(nameof(BoxSpawner), 0.2f);
                         canSpawn = false;
@@ -148,10 +160,11 @@ public class GameManager : MonoBehaviour
     
     void BoxSpawner()
     {
-        int randomPerc = Random.Range(0, 101);
+        int randomPerc = Random.Range(0, 67);
         box = Instantiate(boxPrefab, boxSpawnPoint.position, boxSpawnPoint.rotation);
         int randomNum;
 
+        /*
         if (randomPerc > 90)
         {
             randomNum = Random.Range(0, 3);
@@ -168,11 +181,58 @@ public class GameManager : MonoBehaviour
         {
             randomNum = Random.Range(9, 11);
         }
+        */
 
-        
+        if (randomPerc > 65)
+        {
+            randomNum = 10;
+        }
+        else if (randomPerc > 63)
+        {
+            randomNum = 9;
+        }
+        else if (randomPerc > 60)
+        {
+            randomNum = 8;
+        }
+        else if (randomPerc > 56)
+        {
+            randomNum = 7;
+        }
+        else if (randomPerc > 51)
+        {
+            randomNum = 6;
+        }
+        else if (randomPerc > 45)
+        {
+            randomNum = 5;
+        }
+        else if (randomPerc > 38)
+        {
+            randomNum = 4;
+        }
+        else if (randomPerc > 30)
+        {
+            randomNum = 3;
+        }
+        else if (randomPerc > 21)
+        {
+            randomNum = 2;
+        }
+        else if (randomPerc > 11)
+        {
+            randomNum = 1;
+        }
+        else
+        {
+            randomNum = 0;
+        }
+
+
         box.GetComponent<Box>().boxIndx = randomNum;
         box.GetComponent<Box>().boxNumber = boxNumbers[randomNum];
         box.GetComponent<Renderer>().material = boxMaterials[randomNum];
+        box.AddComponent<boxInHand>();
         
     }
 
