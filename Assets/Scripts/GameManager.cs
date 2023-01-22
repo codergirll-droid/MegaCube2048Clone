@@ -32,7 +32,11 @@ public class GameManager : MonoBehaviour
     public int boxCount = 0;
     bool canPlay = true;
 
-
+    Vector2 touchPos;
+    Touch touch;
+    float touchAmount;
+    int randomPerc;
+    int randomNum;
 
     public static GameManager Instance;
 
@@ -56,6 +60,7 @@ public class GameManager : MonoBehaviour
 
         totalPointsTxt.text = "Score " + 0;
         highScoreTxt.text = "High score: " + SaveSystem.Instance.GetPoints().ToString();
+        touchPos = new Vector2();
     }
 
     private void Update()
@@ -89,9 +94,9 @@ public class GameManager : MonoBehaviour
         {
             if (Input.touchCount > 0)
             {
-                Touch touch = Input.GetTouch(0);
-                Vector2 touchPos = new Vector2();
-                float touchAmount = 0;
+                touch = Input.GetTouch(0);
+                
+                touchAmount = 0; 
                 if (touch.phase == TouchPhase.Began)
                 {
                     touchPos = touch.deltaPosition;
@@ -160,10 +165,9 @@ public class GameManager : MonoBehaviour
     
     void BoxSpawner()
     {
-        int randomPerc = Random.Range(0, 67);
+        randomPerc = Random.Range(0, 67);
         box = Instantiate(boxPrefab, boxSpawnPoint.position, boxSpawnPoint.rotation);
-        int randomNum;
-
+        
         /*
         if (randomPerc > 90)
         {

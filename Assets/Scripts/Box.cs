@@ -6,7 +6,15 @@ public class Box : MonoBehaviour
 {
     public int boxNumber = 2;
     public int boxIndx = 0;
+    GameManager manager;
 
+    Rigidbody rb;
+
+    private void Start()
+    {
+        manager = GameManager.Instance;
+        rb = GetComponent<Rigidbody>();
+    }
 
     private void OnCollisionEnter(Collision other)
     {
@@ -14,26 +22,25 @@ public class Box : MonoBehaviour
         {
             if(other.gameObject.GetComponent<Box>().boxNumber == this.boxNumber)
             {
-                GameManager.Instance.BoxDestroyer(other.gameObject);
-                GetComponent<Rigidbody>().AddExplosionForce(250, this.gameObject.transform.position, 3, 5.0F);
-                GameManager.Instance.AddPoints();
-                GameManager.Instance.totalPointsTxt.text = "Score " + GameManager.Instance.totalPoints;
+                manager.BoxDestroyer(other.gameObject);
+                rb.AddExplosionForce(250, this.gameObject.transform.position, 3, 5.0F);
+                manager.AddPoints();
+                manager.totalPointsTxt.text = "Score " + manager.totalPoints;
 
                 if (boxNumber != 2048)
                 {
-                    //pop particles
-                    GameManager.Instance.BoxUpdater(this.gameObject);
-                    GameManager.Instance.PopParticles(gameObject.GetComponent<Box>(), other.gameObject.transform.position);
+                    manager.BoxUpdater(this.gameObject);
+                    manager.PopParticles(this, other.gameObject.transform.position);
 
-                    GameManager.Instance.boxCount--;
+                    manager.boxCount--;
                 }
                 else
                 {
-                    GameManager.Instance.PopParticles(gameObject.GetComponent<Box>(), other.gameObject.transform.position);
+                    manager.PopParticles(this, other.gameObject.transform.position);
 
-                    GameManager.Instance.BoxDestroyer(this.gameObject);
-                    GameManager.Instance.boxCount--;
-                    GameManager.Instance.boxCount--;
+                    manager.BoxDestroyer(this.gameObject);
+                    manager.boxCount--;
+                    manager.boxCount--;
 
                 }
 
@@ -48,26 +55,25 @@ public class Box : MonoBehaviour
         {
             if (other.gameObject.GetComponent<Box>().boxNumber == this.boxNumber)
             {
-                GameManager.Instance.BoxDestroyer(other.gameObject);
-                GetComponent<Rigidbody>().AddExplosionForce(250, this.gameObject.transform.position, 3, 5.0F);
-                GameManager.Instance.AddPoints();
-                GameManager.Instance.totalPointsTxt.text = "Score " + GameManager.Instance.totalPoints;
+                manager.BoxDestroyer(other.gameObject);
+                rb.AddExplosionForce(250, this.gameObject.transform.position, 3, 5.0F);
+                manager.AddPoints();
+                manager.totalPointsTxt.text = "Score " + manager.totalPoints;
 
                 if (boxNumber != 2048)
                 {
-                    //pop particles
-                    GameManager.Instance.BoxUpdater(this.gameObject);
-                    GameManager.Instance.PopParticles(gameObject.GetComponent<Box>(), other.gameObject.transform.position);
+                    manager.BoxUpdater(this.gameObject);
+                    manager.PopParticles(this, other.gameObject.transform.position);
 
-                    GameManager.Instance.boxCount--;
+                    manager.boxCount--;
                 }
                 else
                 {
-                    GameManager.Instance.PopParticles(gameObject.GetComponent<Box>(), other.gameObject.transform.position);
+                    manager.PopParticles(this, other.gameObject.transform.position);
 
-                    GameManager.Instance.BoxDestroyer(this.gameObject);
-                    GameManager.Instance.boxCount--;
-                    GameManager.Instance.boxCount--;
+                    manager.BoxDestroyer(this.gameObject);
+                    manager.boxCount--;
+                    manager.boxCount--;
 
                 }
 
